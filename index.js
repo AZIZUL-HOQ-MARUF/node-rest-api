@@ -11,6 +11,8 @@ const PORT = 3000; //define application PORT
 
 app.use(morgan('dev')); //log routing for dev
 
+app.use(bodyParser.urlencoded({ extended: false }));// accepting application/x-www-form-urlencoded
+app.use(bodyParser.json()); // accepting application/json
 
 app.use(require('./app/router'));//using router module
 
