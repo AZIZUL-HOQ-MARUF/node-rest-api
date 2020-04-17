@@ -1,14 +1,23 @@
 const express = require('express'),
     app = express(),
     morgan = require('morgan'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose'),
+    dotenv = require('dotenv');
 
 //make available the express and app property
 global.express = express;
 global.app = app;
 
-const PORT = 3000; //define application PORT
+dotenv.config(); //config dotenv 
 
+const PORT = 3000; //define application PORT
+console.log(process.env.MONGO_ATLAS_PSSWD)
+mongoose.connect('mongodb+srv://node-rest-api:' +
+    process.env.MONGO_ATLAS_PSSWD +
+    '@node-rest-api-sr12r.mongodb.net/test?retryWrites=true&w=majority',
+    { useUnifiedTopology: true }
+);
 app.use(morgan('dev')); //log routing for dev
 
 app.use(bodyParser.urlencoded({ extended: false }));// accepting application/x-www-form-urlencoded
