@@ -11,12 +11,14 @@ global.app = app;
 
 dotenv.config(); //config dotenv 
 
-const PORT = 3000; //define application PORT
-console.log(process.env.MONGO_ATLAS_PSSWD)
+//connnecting to mongoDB
 mongoose.connect('mongodb+srv://node-rest-api:' +
     process.env.MONGO_ATLAS_PSSWD +
-    '@node-rest-api-sr12r.mongodb.net/test?retryWrites=true&w=majority',
-    { useUnifiedTopology: true }
+    '@node-rest-api-sr12r.mongodb.net/aziz-db?retryWrites=true&w=majority',
+    {
+        useUnifiedTopology: true, // both added to remove warning
+        useNewUrlParser: true
+    }
 );
 app.use(morgan('dev')); //log routing for dev
 
@@ -40,4 +42,4 @@ app.use(require('./app/router'));//using router module
 const errorHandler = require('./app/error-handler'); //Error Handler
 
 
-app.listen(PORT, () => console.log(`Node With Mongo app listening on port ${PORT}!`)); //start server
+app.listen(process.env.PORT, () => console.log(`Node With Mongo app listening on port ${process.env.PORT}!`)); //start server
