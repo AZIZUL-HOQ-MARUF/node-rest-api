@@ -2,7 +2,7 @@ const express = global.express, router = express.Router();
 const Product = require('../models/product'),
     mongoose = require('mongoose'),
     AppResponse = require('../app-response');
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     Product.find()
         .select('_id name color price')
         .exec()
@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
             res.status(500).json({ error: err });
         })
 });
-router.get('/single/:productId', (req, res, next) => {
+router.get('/single/:productId', (req, res) => {
     const id = req.params.productId;
     Product.findById(id).select('_id name color price').exec()
         .then(result => {
@@ -22,7 +22,7 @@ router.get('/single/:productId', (req, res, next) => {
         });
 
 });
-router.delete('/:productId', (req, res, next) => {
+router.delete('/:productId', (req, res) => {
     const id = req.params.productId;
     Product.remove({ _id: id })
         .exec()
@@ -32,7 +32,7 @@ router.delete('/:productId', (req, res, next) => {
             res.status(500).json(new AppResponse(res.statusCode, null, err.message));
         });
 })
-router.get('/sold', (req, res, next) => {
+router.get('/sold', (req, res) => {
     console.log(getGlobalThis())
     res.status(200).json({
         "data": {
@@ -40,7 +40,7 @@ router.get('/sold', (req, res, next) => {
         }
     })
 })
-router.post('/create-product', (req, res, next) => {
+router.post('/create-product', (req, res) => {
     // let headerParam = req.headers.name; // get value from headers 
     const { name, color, price } = req.body; //it's called object destructing 
     const product = new Product({
