@@ -25,6 +25,7 @@ app.use(morgan('dev')); //log routing for dev
 app.use(bodyParser.urlencoded({ extended: false }));// accepting application/x-www-form-urlencoded
 app.use(bodyParser.json()); // accepting application/json
 
+//Middleware
 //Allow CORS, Headers, Methods
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -34,7 +35,10 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
         return res.status(200).json({});
     }
-    next();
+    if (req.originalUrl === process.env.LOGIN_URL) {
+        return next();
+    }
+    require('./app/middleware/auth-check')(req, res, next);
 });
 
 app.use(require('./app/router'));//using router module
