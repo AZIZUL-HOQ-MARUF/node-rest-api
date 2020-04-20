@@ -46,4 +46,4 @@ app.use(require('./app/router'));//using router module
 const errorHandler = require('./app/error-handler'); //Error Handler
 
 
-app.listen(process.env.PORT, () => console.log(`Node With Mongo app listening on port ${process.env.PORT}!`)); //start server
+app.listen(process.env.PORT || 3000, () => console.log(`Node With Mongo app listening on port ${process.env.PORT}!`)); //start server
